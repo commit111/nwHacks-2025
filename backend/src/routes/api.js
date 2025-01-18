@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-import User from "../model/user";
-import Workout from "../model/workout";
+const User = require("../model/user");
+const Workout = require("../model/workout");
 
 const users = [];
 const workouts = [];

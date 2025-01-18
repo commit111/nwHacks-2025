@@ -1,5 +1,5 @@
 // Data schema for a single user
-export default class User {
+class User {
     username;               // string           Username of the user
     email;                  // string           Email of the user
     password;               // string           Password of the user 
@@ -19,3 +19,5 @@ export default class User {
         this.preferredMusic = [];
     }
 }
+
+module.exports = User;
