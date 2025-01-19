@@ -7,7 +7,6 @@ const PoseDetection = ({ desiredExercises }: { desiredExercises?: string[] }) =>
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isWorkoutActive, setIsWorkoutActive] = useState(false);
   const [repCount, setRepCount] = useState(0);
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(0);
   let activePoseDesired: boolean = true;
