@@ -3,6 +3,24 @@ import { Navigation } from "@/components/Navigation";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+const workoutImages = [
+  {
+    image: "./yoga.jpg",
+  },
+  {
+    image: "./shadow.jpg",
+  },
+  {
+    image: "./dance.jpg",
+  },
+  {
+    image: "./yoga.jpg",
+  },
+  {
+    image: "./dance.jpg",
+  }
+];
+
 const exerciseImages = [
   { id: "1", title: "Rear Lunges", image: "./lunge.jpg" },
   { id: "2", title: "Butt Kickers", image: "./butt.jpg" },
@@ -68,7 +86,7 @@ const Index = () => {
                   onClick={() => navigate("/pose-detector/" + index)}
                 >
                   <img
-                    src={workout.imageURL}
+                    src={workoutImages[index].image}
                     alt={workout.title}
                     className="w-full h-48 object-cover rounded-xl border border-gray-300"
                   />
