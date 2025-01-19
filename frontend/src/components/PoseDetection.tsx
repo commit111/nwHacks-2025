@@ -61,8 +61,11 @@ const PoseDetection = ({ desiredExercises }: { desiredExercises?: string[] }) =>
   
         const updateRepCount = (poseName: string) => {
           const currentTime = Date.now();
-          // 0.5 second buffer time between valid reps, to prevent false positives for detection of the neutral pose
-          if (currentTime - lastUpdateTime < 500) return;
+          // 1 second buffer time between valid reps, to prevent false positives for detection of the neutral pose
+          if (currentTime - lastUpdateTime < 10000) {
+            console.log("Ignoring rep count update - happened too soon");
+            return;
+          }
   
           if (desiredExercises === undefined || desiredExercises.includes(poseName)) {
             setRepCount((prevCount) => prevCount + 1);
@@ -266,11 +269,11 @@ const PoseDetection = ({ desiredExercises }: { desiredExercises?: string[] }) =>
     // Pause the video
     if (videoRef.current) {
       videoRef.current.pause();
-    }    
+    }
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto pb-10">
+    <div className="relative w-full max-w-2xl mx-auto">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#e0e6f8]/80 rounded-lg animate-fade-up">
           <div className="text-lg font-semibold text-[#5e5b99]">

@@ -17,7 +17,7 @@ const PoseDetector = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#e0e6f8] to-[#cbd4f4] flex flex-col items-center relative">
+    <div className="min-h-screen bg-gradient-to-r from-[#e0e6f8] to-[#cbd4f4] flex flex-col items-center relative pb-10">
       <Navigation />
       <main className="container mx-auto pt-36 page-transition space-y-12">
         <div className="space-y-6 text-center">
