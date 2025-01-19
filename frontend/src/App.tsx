@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 import Index from "./pages/Index";
 import Categories from "./pages/Categories";
+import Workout from "./pages/Workout";
 import WorkoutDetail from "./pages/WorkoutDetail";
 import PoseDetector from "./pages/PoseDetector";
 
@@ -20,6 +21,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/workout" element={<Workout />} />
           <Route path="/workout/:id" element={<WorkoutDetail />} />
           <Route path="/pose-detector" element={<PoseDetector />} />
         </Routes>
