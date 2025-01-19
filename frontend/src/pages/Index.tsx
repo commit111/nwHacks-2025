@@ -8,20 +8,21 @@ const workoutImages = [
     image: "./balance.jpg",
   },
   {
+    image: "./yoga.jpg",
+  },
+  {
     image: "./sit.jpg",
   },
   {
     image: "./shadow.jpg",
   },
+
   {
-    image: "./yoga.jpg",
+    image: "./hit.jpg",
   },
   {
     image: "./dance.jpg",
   },
-  {
-    image: "./hit.jpg",
-  }
 ];
 
 const exerciseImages = [
