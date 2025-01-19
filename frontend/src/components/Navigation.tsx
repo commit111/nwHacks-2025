@@ -38,6 +38,16 @@ export const Navigation = () => {
           >
             Workout
           </Link>
+          <Link
+            to="/pose-detector"
+            className={`transition-colors hover:text-primary ${
+              location.pathname === "/pose-detector"
+                ? "text-primary"
+                : "text-muted-foreground"
+            }`}
+          >
+            Pose Detector
+          </Link>
         </div>
       </div>
     </nav>
