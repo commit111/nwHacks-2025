@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { toast } from '@/components/ui/use-toast';
+
 const PoseDetection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -25,7 +26,7 @@ const PoseDetection = () => {
               setIsLoading(false);
               detectPose();
             };
-        }
+          }
         }
       } catch (error) {
         console.error('Error initializing pose detection:', error);
@@ -37,7 +38,7 @@ const PoseDetection = () => {
       }
     };
     const detectPose = async () => {
-    console.log('hey');
+      console.log('hey');
       if (!detector || !videoRef.current || !canvasRef.current) return;
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -53,6 +54,20 @@ const PoseDetection = () => {
       poses.forEach((pose) => {
         drawKeypoints(ctx, pose.keypoints);
         drawSkeleton(ctx, pose.keypoints);
+
+        if (isTPose(pose.keypoints)) {
+            console.log('T-pose detected!');
+            setRepCount((prevCount) => prevCount + 1);
+          }
+
+        if (isSquatPose(pose.keypoints)) {
+            console.log('Squat pose detected!');
+            setRepCount((prevCount) => prevCount + 1);
+          }
+        if (isDabbingPose(pose.keypoints)) {
+            console.log('Dabbing pose detected!');
+            setRepCount((prevCount) => prevCount + 1);
+          }
       });
       animationFrameId = requestAnimationFrame(detectPose);
     };
@@ -81,8 +96,8 @@ const PoseDetection = () => {
       connections.forEach(([p1, p2]) => {
         const point1 = keypoints.find((kp) => kp.name === p1);
         const point2 = keypoints.find((kp) => kp.name === p2);
-        if (point1 && point2 && point1.score && point2.score && 
-            point1.score > 0.3 && point2.score > 0.3) {
+        if (point1 && point2 && point1.score && point2.score &&
+          point1.score > 0.3 && point2.score > 0.3) {
           ctx.beginPath();
           ctx.moveTo(point1.x, point1.y);
           ctx.lineTo(point2.x, point2.y);
@@ -92,6 +107,56 @@ const PoseDetection = () => {
         }
       });
     };
+
+    const isTPose = (keypoints: poseDetection.Keypoint[]) => {
+        const leftShoulder = keypoints.find((kp) => kp.name === 'left_shoulder');
+        const rightShoulder = keypoints.find((kp) => kp.name === 'right_shoulder');
+        const leftWrist = keypoints.find((kp) => kp.name === 'left_wrist');
+        const rightWrist = keypoints.find((kp) => kp.name === 'right_wrist');
+  
+        if (leftShoulder && rightShoulder && leftWrist && rightWrist) {
+          const shoulderDistance = Math.abs(leftShoulder.x - rightShoulder.x);
+          const leftArmHorizontal = Math.abs(leftShoulder.y - leftWrist.y) < shoulderDistance * 0.2;
+          const rightArmHorizontal = Math.abs(rightShoulder.y - rightWrist.y) < shoulderDistance * 0.2;
+  
+          return leftArmHorizontal && rightArmHorizontal;
+        }
+        return false;
+      };
+
+    const isSquatPose = (keypoints: poseDetection.Keypoint[]) => {
+    const leftHip = keypoints.find((kp) => kp.name === 'left_hip');
+    const rightHip = keypoints.find((kp) => kp.name === 'right_hip');
+    const leftKnee = keypoints.find((kp) => kp.name === 'left_knee');
+    const rightKnee = keypoints.find((kp) => kp.name === 'right_knee');
+
+    if (leftHip && rightHip && leftKnee && rightKnee) {
+        const hipsLowerThanKnees = leftHip.y > leftKnee.y && rightHip.y > rightKnee.y;
+        const kneesBent = Math.abs(leftHip.x - leftKnee.x) < Math.abs(leftHip.y - leftKnee.y) &&
+                        Math.abs(rightHip.x - rightKnee.x) < Math.abs(rightHip.y - rightKnee.y);
+
+        return hipsLowerThanKnees && kneesBent;
+    }
+    return false;
+    };
+
+    const isDabbingPose = (keypoints: poseDetection.Keypoint[]) => {
+        const leftShoulder = keypoints.find((kp) => kp.name === 'left_shoulder');
+        const rightShoulder = keypoints.find((kp) => kp.name === 'right_shoulder');
+        const leftElbow = keypoints.find((kp) => kp.name === 'left_elbow');
+        const rightElbow = keypoints.find((kp) => kp.name === 'right_elbow');
+        const leftWrist = keypoints.find((kp) => kp.name === 'left_wrist');
+        const rightWrist = keypoints.find((kp) => kp.name === 'right_wrist');
+  
+        if (leftShoulder && rightShoulder && leftElbow && rightElbow && leftWrist && rightWrist) {
+          const leftArmUp = leftWrist.y < leftShoulder.y && leftElbow.y < leftShoulder.y;
+          const rightArmBent = rightWrist.y > rightElbow.y && rightElbow.y > rightShoulder.y;
+  
+          return leftArmUp && rightArmBent;
+        }
+        return false;
+      };
+
     initPoseDetection();
     return () => {
       if (animationFrameId) {
@@ -112,16 +177,16 @@ const PoseDetection = () => {
           </div>
         </div>
       )}
-      <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+      <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
         <video
           ref={videoRef}
           autoPlay
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 h-full object-cover"
         />
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 h-full"
           width={640}
           height={480}
         />
