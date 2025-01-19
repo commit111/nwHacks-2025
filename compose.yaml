@@ -9,10 +9,6 @@ services:
       - target: 3001
         published: 3001
         mode: ingress
-    deploy:
-      resources:
-        reservations:
-          memory: 256M
     environment:
       - ATLAS_URI
   frontend:
@@ -24,9 +20,5 @@ services:
       - target: 3000
         published: 3000
         mode: ingress
-    deploy:
-      resources:
-        reservations:
-          memory: 256M
     environment:
       - SERVER_URI
