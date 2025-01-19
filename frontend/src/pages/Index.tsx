@@ -5,22 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 const workoutImages = [
   {
-    image: "./yoga.jpg",
+    image: "./balance.jpg",
+  },
+  {
+    image: "./sit.jpg",
   },
   {
     image: "./shadow.jpg",
   },
   {
-    image: "./dance.jpg",
-  },
-  {
     image: "./yoga.jpg",
   },
   {
     image: "./dance.jpg",
   },
   {
-    image: "./dance.jpg",
+    image: "./hit.jpg",
   }
 ];
 
