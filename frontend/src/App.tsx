@@ -13,7 +13,7 @@ import { createContext } from "react";
 
 const queryClient = new QueryClient();
 const WorkoutContext = createContext(null);
-const SERVER_URI = "http://localhost:3001";
+const SERVER_URI = process.env.SERVER_URI || "http://localhost:3001";
 const initialState = await fetch(`${SERVER_URI}/api/workouts`).then((res) => res.json());
 
 const App = () => (

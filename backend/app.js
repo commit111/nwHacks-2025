@@ -4,38 +4,21 @@ const mongoose = require("mongoose");
 const workoutModel = require("./mongodb/schemas").workoutModel;
 const initialState = require("./mongodb/initial_state").initialState;
 require('dotenv').config();
+const cors = require('cors');
 
 // Initializing an instance of "express" and setting up all dependencies
 let app = express();
+const port = 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // Object to store allowed sites for CORS
-const cors = {
-    origins: ["http://localhost:8080", "http://localhost:3000", "http://localhost:5173"],
-    default: "http://localhost:8080"
+const corsOptions = {
+    origins: ["http://localhost:8080", "http://localhost:3000", "http://localhost:5173", "https://commit111-frontend--3000.prod1.defang.dev"]
 }
 
-// CORS middleware adapted from https://stackoverflow.com/questions/18310394/no-access-control-allow-origin-node-apache-port-issue
-app.use(function (req, res, next) {
-    // Checking if the origin of the request comes from a site allowed to visit the backend
-    const origin = cors.origins.includes(req.header("origin").toLowerCase()) ? req.headers.origin : cors.default;
-
-    // Allowing access to websites we wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', origin);
-
-    // Request methods we wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers we wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    
-    // Allowing cookies for these websites
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Using API routes
 app.use("/api", apiRoutes);
@@ -51,5 +34,12 @@ mongoose.connect(process.env.ATLAS_URI, { dbName: "nwHacks-2025" }).then(async (
 }).catch(
     error => {console.log("Error connecting to MongoDB Atlas server: " + error)}
 );
+
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+
 
 module.exports = app;

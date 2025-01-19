@@ -4,7 +4,8 @@
   "description": "Backend to store user and workout data for HIPT",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "npm install"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.5",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "cors": "^2.8.5",
+    "node": "^22.2.0"
   }
 }

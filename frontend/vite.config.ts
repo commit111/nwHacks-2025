@@ -7,7 +7,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }: { mode: any }) => ({
   server: {
     host: "::",
-    port: 8080,
+    port: 3000,
   },
   plugins: [
     react(),
@@ -18,5 +18,9 @@ export default defineConfig(({ mode }: { mode: any }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  esbuild: {
+    target: 'esnext', // Ensure the target environment supports top-level await
+    supported: { 'top-level-await': true }, // Add this line to explicitly enable top-level awai
   },
 }));

@@ -1,0 +1,24 @@
+
+services:
+  backend:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - target: 3001
+        published: 3001
+        mode: ingress
+    environment:
+      - ATLAS_URI
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - target: 3000
+        published: 3000
+        mode: ingress
+    environment:
+      - SERVER_URI
