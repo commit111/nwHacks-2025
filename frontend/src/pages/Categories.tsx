@@ -24,7 +24,7 @@ const selectedItems = {
     description: "A motivational classic to keep you going!",
     duration: "4 min",
     level: "Music",
-    image: "/images/brat.jpg",
+    image: "/public/brat.jpg",
   },
 };
 

@@ -23,25 +23,25 @@ const songSelection = [
     id: "1",
     artist: "NF",
     song: "Lie",
-    image: "/images/brat.jpg",
+    image: "/public/brat.jpg",
   },
   {
     id: "2",
     artist: "Artist",
     song: "Song",
-    image: "/images/post.jpg",
+    image: "/public/post.jpg",
   },
   {
     id: "3",
     artist: "Artist",
     song: "Song",
-    image: "/images/sabrina.jpg",
+    image: "/public/sabrina.jpg",
   },
   {
     id: "4",
     artist: "Artist",
     song: "Song",
-    image: "/images/metro.jpg",
+    image: "/public/metro.jpg",
   },
 ];
 
