@@ -30,5 +30,4 @@ navigator.mediaDevices.getUserMedia({ video: true })
   })
   .catch((err) => {
     console.log("An error occurred: " + err);
-  }
-);
+  });
