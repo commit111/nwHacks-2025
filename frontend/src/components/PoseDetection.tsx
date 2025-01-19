@@ -64,7 +64,7 @@ const PoseDetection = ({ desiredExercises }: { desiredExercises?: string[] }) =>
           // 0.5 second buffer time between valid reps, to prevent false positives for detection of the neutral pose
           if (currentTime - lastUpdateTime < 500) return;
   
-          if (desiredExercises.includes(poseName) || desiredExercises === undefined) {
+          if (desiredExercises === undefined || desiredExercises.includes(poseName)) {
             setRepCount((prevCount) => prevCount + 1);
             setLastUpdateTime(currentTime);
             activePoseDesired = false;
@@ -270,22 +270,32 @@ const PoseDetection = ({ desiredExercises }: { desiredExercises?: string[] }) =>
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-full max-w-2xl mx-auto pb-10">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-secondary/80 rounded-lg animate-fade-up">
-          <div className="text-lg font-semibold text-secondary-foreground">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#e0e6f8]/80 rounded-lg animate-fade-up">
+          <div className="text-lg font-semibold text-[#5e5b99]">
             Initializing Camera...
           </div>
         </div>
       )}
-      <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-        <video ref={videoRef} autoPlay playsInline className="absolute inset-0 h-full object-cover" />
-        <canvas ref={canvasRef} className="absolute inset-0 h-full" width={640} height={480} />
+      <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg border border-[#cbd4f4]">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          className="absolute inset-0 h-full object-cover"
+        />
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 h-full"
+          width={640}
+          height={480}
+        />
       </div>
       <div className="mt-4 p-4 bg-white rounded-lg shadow-md animate-fade-up">
         <div className="text-center">
-          <span className="text-sm font-medium text-gray-500">Reps</span>
-          <div className="text-3xl font-bold text-primary">{repCount}</div>
+          <span className="text-sm font-medium text-[#7b7ab8]">Reps</span>
+          <div className="text-3xl font-bold text-[#5e5b99]">{repCount}</div>
           <div className="mt-4 flex justify-center space-x-4">
             <button
               onClick={() => startWorkout()}
